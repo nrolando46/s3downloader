@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Download File</title>
+</head>
+<body>
+    <h1>Download File</h1>
+    <button id="downloadButton">Download</button>
+
+    <script>
+        document.getElementById("downloadButton").addEventListener("click", function () {
+            fetch("https://izt6h985s5.execute-api.us-west-2.amazonaws.com/nm-presigned-test")
+                .then(response => response.json())
+                .then(data => {
+                    const downloadUrl = data.download_url;
+                    const anchor = document.createElement("a");
+                    anchor.href = downloadUrl;
+                    anchor.download = "cool_car.avif"; 
+                    anchor.style.display = "none";
+                    document.body.appendChild(anchor);
+                    anchor.click();
+                    document.body.removeChild(anchor);
+                })
+                .catch(error => {
+                    console.error("Error fetching pre-signed URL:", error);
+                });
+        });
+    </script>
+</body>
+</html>
